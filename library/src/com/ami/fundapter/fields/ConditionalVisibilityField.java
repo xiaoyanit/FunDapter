@@ -1,8 +1,7 @@
 package com.ami.fundapter.fields;
 
+import com.ami.fundapter.interfaces.ItemClickListener;
 import com.ami.fundapter.extractors.BooleanExtractor;
-
-import android.view.View.OnClickListener;
 
 /**
  * A field to conditionally show a view based on some boolean value. Good for
@@ -25,7 +24,7 @@ public class ConditionalVisibilityField<T> extends BaseField<T> {
     }
 
     @Override
-    public ConditionalVisibilityField<T> onClick(OnClickListener onClickListener) {
+    public ConditionalVisibilityField<T> onClick(ItemClickListener<T> onClickListener) {
 
 	return (ConditionalVisibilityField<T>) super.onClick(onClickListener);
     }

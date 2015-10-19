@@ -5,9 +5,7 @@ You get free ViewHolder pattern support, field validation so you don't get bit b
 
 ## What's new?
 
-1. Added support for the most hated adapter of all - ExpandableListAdapter. Check out the sample!
-2. Refactored code to make it more organized.
-3. Added support for filtering data in a regular Adapter (Expandable filtering will be coming soon!)
+1. Gradle support now only contains a JAR archive instead of AAR which wasn't needed. Just add `compile 'com.github.amigold.fundapter2:library:1.01'` to your dependencies in the build.gradle file in your project.
 
 ## What you used to do:
 
@@ -29,28 +27,34 @@ Well that was boring! I feel your pain!
 
 This is the `Product` class we'll create an adapter for:
 
-	public class Product {
+```java
+public class Product {
 	
-		public String title;
-		public String description;
-		public String imageUrl;
-		public double price;
-	}
+	public String title;
+	public String description;
+	public String imageUrl;
+	public double price;
+}
+```
 
 ### Create a new BindDictionary instance: 
 
-	BindDictionary<Product> dict = new BindDictionary<Product>();
+```java
+BindDictionary<Product> dict = new BindDictionary<Product>();
+```
 
 ### Adding a basic text field:
 
-	dict.addStringField(R.id.description,
-		new StringExtractor<Product>() {
+```java
+dict.addStringField(R.id.description,
+	new StringExtractor<Product>() {
 
-		    @Override
-		    public String getStringValue(Product item, int position) {
-				return item.description;
-		    }
-		});
+	    @Override
+	    public String getStringValue(Product item, int position) {
+			return item.description;
+	    }
+	});
+```
 		
 Notice how you simply provide the id of the `TextView` and an 
 implementation of the `StringExtractor` which will be used to get the correct `String` value from your `Product`.
@@ -58,14 +62,16 @@ implementation of the `StringExtractor` which will be used to get the correct `S
 --------------------
 ### Now a more complicated text field:
 
-	dict.addStringField(R.id.title,
-		new StringExtractor<Product>() {
+```java
+dict.addStringField(R.id.title,
+	new StringExtractor<Product>() {
 
-		    @Override
-		    public String getStringValue(Product item, int position) {
-				return item.title;
-		    }
-		}).typeface(myBoldFace).visibilityIfNull(View.GONE);
+	    @Override
+	    public String getStringValue(Product item, int position) {
+			return item.title;
+	    }
+	}).typeface(myBoldFace).visibilityIfNull(View.GONE);
+```
 
 Notice how you can chain calls to get some more complex behaviours out of your views. 
 `typeface()` will set a typeface on the view while 
@@ -75,19 +81,21 @@ Notice how you can chain calls to get some more complex behaviours out of your v
 
 ### What about our image?? Lets add that as well:
 
-	prodDict.addImageField(R.id.productImage,
-		new StringExtractor<Product>() {
+```java
+prodDict.addDynamicImageField(R.id.productImage,
+	new StringExtractor<Product>() {
 
-		    @Override
-		    public String getStringValue(Product item, int position) {
-				return item.imageUrl;
-		    }
-		}, new ImageLoader() {
-		    @Override
-		    public void loadImage(String url, ImageView view) {
-				//insert your own async image loader implementation
-		    }
-		});
+	    @Override
+	    public String getStringValue(Product item, int position) {
+			return item.imageUrl;
+	    }
+	}, new DynamicImageLoader() {
+	    @Override
+	    public void loadDynamicImage(String url, ImageView view) {
+			//insert your own async image loader implementation
+	    }
+	});
+```
 		
 In here the `StringExtractor` grabs the URL from the `Product` item while the `ImageLoader` gives you a 
 reference to the view and the URL you extracted so you can use your own custom lazy image loading implementation.
@@ -95,8 +103,10 @@ reference to the view and the URL you extracted so you can use your own custom l
 -------------
 ### Finally, create the adapter:
 
-	FunDapter<Product> adapter = new FunDapter<Product>(getActivity(), productArrayList,
-			R.layout.product_list_item, dict);
+```java
+FunDapter<Product> adapter = new FunDapter<Product>(getActivity(), productArrayList,
+		R.layout.product_list_item, dict);
+```
 
 ## What is supported so far:
 
@@ -118,6 +128,9 @@ reference to the view and the URL you extracted so you can use your own custom l
 * Support for ViewPagerAdapter
 * Support for Favorite toggle buttons (where you provide your own implementation for the data persistence)
 * Whatever else I can think of!
+
+## Gradle Support
+Just add `compile 'com.github.amigold.fundapter:library:1.0'` to your dependencies in the build.gradle file in your project.
 	
 ## License 
 

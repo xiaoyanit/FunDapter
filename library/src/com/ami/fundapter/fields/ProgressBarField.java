@@ -1,8 +1,7 @@
 package com.ami.fundapter.fields;
 
+import com.ami.fundapter.interfaces.ItemClickListener;
 import com.ami.fundapter.extractors.IntegerExtractor;
-
-import android.view.View.OnClickListener;
 
 
 /**
@@ -24,7 +23,7 @@ public class ProgressBarField<T> extends BaseField<T> {
     }
     
     @Override
-    public ProgressBarField<T> onClick(OnClickListener onClickListener) {
+    public ProgressBarField<T> onClick(ItemClickListener<T> onClickListener) {
 	
 	return (ProgressBarField<T>) super.onClick(onClickListener);
     }
